@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event-Listener</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .btn-spacing{
+            margin:0.5rem;
+        }
+        #btn-click{
+            padding:0.1rem 1rem;
+        }
+    </style>
+</head>
+<body>
+    <input class="btn-spacing input-val" type="text"></input><br>
+    <button id="btn-click">+</button>
+    <script>
+        //init the Total Expense
+        let totalExpense=0;
+        //giving the ref. to the button
+        const btn= document.querySelector("#btn-click");
+        //giving the ability to listen to the button interaction
+        //on button click add input amount to total expense
+        btn.addEventListener("click", addExpense) 
+        function addExpense(){
+             //read the value from the input
+             const inputVal= document.querySelector(".input-val");
+             const val= inputVal.value;
+             //console.log(val);
+             //as .value returns a string so we have to convert it to the number
+             const expense= parseInt(val);
+             //add that vale to total expense
+             totalExpense+= expense;
+             console.log(totalExpense);
+        };
+        
+
+        
+    </script>
+    
+</body>
+</html>
