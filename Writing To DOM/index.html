@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="div-out"></div>
-    <input class="btn-spacing input-val" type="text" placeholder="Give an input">
+    <input class="input-val" type="text" placeholder="Give an input">
     <button id="btn-click">+</button>
     <script>
         //init the Total Expense
@@ -31,13 +31,14 @@
         const btn= document.querySelector("#btn-click");
         //giving the ref. to the output
         var output= document.querySelector("#div-out");
+        //giving the ref. to the input value
+        const input= document.querySelector(".input-val");
 
         //giving the ability to listen to the button interaction
         //on button click add input amount to total expense
         btn.addEventListener("click", addExpense) 
         function addExpense(){
              //read the value from the input
-             const input= document.querySelector(".input-val");
              const val= input.value;
              //console.log(val);
              //as .value returns a string so we have to convert it to the number
