@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Templating in JavaScript</title>
+    <title>Generating the Table in HTML</title>
     <style>
         body{
             display: flex;
@@ -18,12 +18,15 @@
         .bar-length{
             width: 12rem;
         }
+        #ref-out{
+            border: 1px solid black;
+        }
     </style>
 </head>
 <body>
     <div id="div-out"></div>
     <input class="bar-length" id="input-desc" type="text" placeholder="Give your expense description">
-    <input class="bar-length" id="input-val" type="text" placeholder="Give your expense amount">
+    <input class="bar-length" id="input-val" type="text" placeholder="Give your expense amount"><br>
     <div id="ref-out"></div>
     <button class="btn-spacing" id="btn-click">+</button>
     <script>
@@ -48,6 +51,7 @@
         //creating an array to store the list of every item's expenses
         const allExpenses=[];
 
+        //const table="";
         //giving the ability to listen user events
         btnRef.addEventListener("click", clickEventHandler);
 
@@ -75,10 +79,18 @@
             output.textContent= "Total: "+totalExpense;
 
             //table templating by storing the index value of allExpense
-            const firstData= allExpenses[0];
-            const secondData= allExpenses[1];
-            const table= "<div>"+"Description: "+firstData.desc+" "+"::"+" "+"Expense: "+firstData.amount+"</div>"+" "+"<div>"+"Description: "+secondData.desc+" "+"::"+" "+"Expense: "+secondData.amount+" "+"</div>";
-            expenseTable.innerHTML= table;
+            // const firstData= allExpenses[0];
+            // const secondData= allExpenses[1];
+            // console.log(secondData); 
+            // const table= "<div>"+"Description: "+firstData.desc+" "+"::"+" "+"Expense: "+firstData.amount+"</div>"+" "+"<div>"+"Description: "+secondData.desc+" "+"::"+" "+"Expense: "+secondData.amount+" "+"</div>";
+            
+            const expenseTableArr= allExpenses.map((expItem)=> {
+                const table= "<div>"+"Description: "+expItem.desc+" "+"::"+" "+"Expense: "+expItem.amount+"</div>";
+                return table;
+            }); //this function returns string as an array because of map function
+            const tableinHTML= expenseTableArr.join("");
+            expenseTable.innerHTML= tableinHTML;
+            //console.log(table);
         }
     </script>
 </body>
