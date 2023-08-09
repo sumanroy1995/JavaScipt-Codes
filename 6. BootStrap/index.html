@@ -16,15 +16,24 @@
             </a>
         </div>
     </nav>
+    <div class="container-fluid bg-light text-light p-5">
+        <div class="container">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="input-desc" placeholder="Item Spent-On" aria-label="Item Spent-On"
+                    aria-describedby="spent-on">
+            </div>
 
-
-
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="input-val" placeholder="Item Cost" aria-label="Item Cost"
+                    aria-describedby="cost-expense">
+                <span class="input-group-text" id="cost-expense">₹</span>
+                <button class="btn btn-outline-primary" type="button" id="btn-click">Add</button>
+            </div>
+        </div>
+    </div>
 
     <div id="div-out"></div>
-    <input class="bar-length" id="input-desc" type="text" placeholder="Give your expense description">
-    <input class="bar-length" id="input-val" type="text" placeholder="Give your expense amount"><br>
     <div id="ref-out"></div>
-    <button class="btn-spacing" id="btn-click">+</button>
     <script>
         //init the total expense
         let totalExpense=0;
