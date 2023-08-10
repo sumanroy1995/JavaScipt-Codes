@@ -87,7 +87,7 @@
                 expenseObj.desc = txtDesc;
                 expenseObj.amount = expense;
                 expenseObj.event= new Date();
-                expenseObj.options={year: 'numeric', month: 'long', day: 'numeric'};
+                //expenseObj.options={year: 'numeric', month: 'long', day: 'numeric'};
 
                 //pushing into the array of expense object on each click
                 allExpenses.push(expenseObj);
@@ -113,11 +113,11 @@
                   </div>
             </div>`;
                 }
-                function createListItem({desc,amount, event, options}){
+                function createListItem({desc,amount, event}){
                     return `<li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">${desc}</div>
-                        <small class="text-muted">${event.toLocaleDateString('en-US', options)}</small>
+                        <small class="text-muted">${getDate(event)}</small>
                     </div>
                     <div>
                         <span class="px-3">${amount}</span>
@@ -131,6 +131,11 @@
                         </button>
                     </div>
                 </li>`;
+                }
+
+                //to get the date
+                function getDate(event){ //passing the event object as an argument that is created earlier
+                    return event.toLocaleDateString('en-US',{year: 'numeric', month: 'long', day: 'numeric'});
                 }
             }
         </script>
