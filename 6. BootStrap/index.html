@@ -139,7 +139,7 @@
                         <button 
                             type="button" 
                             class="btn btn-outline-danger"
-                            onclick= "deleteItem()"
+                            onclick= "deleteItem(${event.valueOf()})"
                             >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash3" viewBox="0 0 16 16">
@@ -158,8 +158,12 @@
                 }  
             
                 //this function is used to delete that particular item from the list
-                function deleteItem(){
-                    console.log("delete button function got called");
+                function deleteItem(dateVal){
+                    for(let i=0; i<allExpenses.length; i++){
+                        if(allExpenses[i].event.valueOf()===dateVal){
+                            console.log("Delete button clicked");
+                        }
+                    }
                     
                 }
         </script>
