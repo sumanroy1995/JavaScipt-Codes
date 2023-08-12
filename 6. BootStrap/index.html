@@ -20,23 +20,33 @@
     <div class="container-fluid bg-light text-light p-5">
         <div class="container">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="input-desc" placeholder="Item Spent-On"
-                    aria-label="Item Spent-On" aria-describedby="spent-on">
+                <input 
+                type="text" 
+                class="form-control" 
+                id="input-desc" 
+                placeholder="Item Spent-On"
+                aria-label="Item Spent-On" 
+                aria-describedby="spent-on"
+                >
             </div>
 
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="input-val" placeholder="Item Cost" aria-label="Item Cost"
-                    aria-describedby="cost-expense">
+                <input 
+                type="text" 
+                class="form-control" 
+                id="input-val" 
+                placeholder="Item Cost" aria-label="Item Cost"
+                aria-describedby="cost-expense">
                 <span class="input-group-text" id="cost-expense">₹</span>
-                <button class="btn btn-outline-primary" type="button" id="btn-click">Add</button>
+                <button class="btn btn-outline-primary" type="button" id="btn-click">Add</button
+                >
             </div>
         </div>
     </div>
 
     <div class="p-3">
         <div class="container">
-            <div id="total-out">
-            </div>
+            <div id="total-out"></div>
         </div>
 
         <div class="p-5">
@@ -67,12 +77,11 @@
             //creating an array to store the list of every item's expenses
             const allExpenses = [];
 
-            //const table="";
             //giving the ability to listen user events
             btnRef.addEventListener("click", clickEventHandler);
 
             //defininig the event handler
-            function clickEventHandler() {
+            function clickEventHandler(){
                 //storing and reading the value of input
                 const inputValue = inputRef.value;
 
@@ -97,11 +106,15 @@
                 //output.textContent = "Total: " + totalExpense;
                 output.innerHTML = getTotal(totalExpense);
 
-                const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //this function returns string as an array because of map function
+                const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //this function returns string as an array because of map function which is responsible to print it on DOM
                 const tableinHTML = expenseTableArr.join("");
                 expenseTable.innerHTML = tableinHTML;
+            }
 
-                //View-Table function defined
+                //CONTROLLER FUNCTIONS................................
+
+                //View-Table function defined.....
+                //this function gives the output of total cost of all items
                 function getTotal(totalCost){
                     return `<div class="card text-center">
                     <div class="card-header">
@@ -111,9 +124,11 @@
                       <h5 class="card-title">${totalCost}</h5>
                     </div>
                   </div>
-            </div>`;
+                </div>`;
                 }
-                function createListItem({desc,amount, event}){
+
+                //this function creates the list item to DOM
+                function createListItem({desc,amount,event}){
                     return `<li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">${desc}</div>
@@ -121,24 +136,32 @@
                     </div>
                     <div>
                         <span class="px-3">${amount}</span>
-                        <button type="button" class="btn btn-outline-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path
-                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z">
-                                </path>
-                            </svg>
+                        <button 
+                            type="button" 
+                            class="btn btn-outline-danger"
+                            onclick= "deleteItem()"
+                            >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path
+                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z">
+                            </path>
+                        </svg>
                         </button>
                     </div>
                 </li>`;
                 }
 
-                //to get the date
+                //this function gives the output of the date
                 function getDate(event){ //passing the event object as an argument that is created earlier
                     return event.toLocaleDateString('en-US',{year: 'numeric', month: 'long', day: 'numeric'});
+                }  
+            
+                //this function is used to delete that particular item from the list
+                function deleteItem(){
+                    console.log("delete button function got called");
+                    
                 }
-            }
         </script>
-</body>
-
+    </body>
 </html>
