@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event-Listener</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+    
+</head>
+<body>
+    <button id="btn-click">+</button>
+    <script>
+        //giving a reference to the button into the web-doc
+        const button= document.querySelector("#btn-click");
+        //giving the ability to listen the clicks of buttom from user
+        button.addEventListener("click", clickEventHandler);
+        //to get the count of clicks by user
+        let count=0;
+
+        //defining the function
+        function clickEventHandler(){
+            count+= 1;
+            console.log(count);
+        }
+    </script>
+    
+</body>
+</html>

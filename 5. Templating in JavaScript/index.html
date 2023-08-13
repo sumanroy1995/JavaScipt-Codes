@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generating the Table in HTML</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .btn-spacing{
+            margin: 0.5rem;
+        }
+        .bar-length{
+            width: 12rem;
+        }
+        #ref-out{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="div-out"></div>
+    <input class="bar-length" id="input-desc" type="text" placeholder="Give your expense description">
+    <input class="bar-length" id="input-val" type="text" placeholder="Give your expense amount"><br>
+    <div id="ref-out"></div>
+    <button class="btn-spacing" id="btn-click">+</button>
+    <script>
+        //init the total expense
+        let totalExpense=0;
+
+        //getting a ref. to the button
+        const btnRef= document.querySelector("#btn-click");
+
+        //getting a ref. to the input
+        const inputRef= document.querySelector("#input-val");
+
+        //getting a ref. to the items description where user done his/her expense
+        const textDesc= document.querySelector("#input-desc");
+
+        //getting a ref. to the output
+        var output= document.querySelector("#div-out");
+
+        //getting a ref. for templating the output
+        const expenseTable= document.querySelector("#ref-out");
+
+        //creating an array to store the list of every item's expenses
+        const allExpenses=[];
+
+        //const table="";
+        //giving the ability to listen user events
+        btnRef.addEventListener("click", clickEventHandler);
+
+        //defininig the event handler
+        function clickEventHandler(){
+            //storing and reading the value of input
+            const inputValue= inputRef.value;
+
+            //storing and reading the text description of textDesc
+            const txtDesc= textDesc.value;
+
+            //convert the value to number
+            const expense= parseInt(inputValue);
+
+            //creating an object to store the information of items and its amount
+            const expenseObj= {};
+            expenseObj.desc= txtDesc;
+            expenseObj.amount= expense;
+
+            //pushing into the array of expense object on each click
+            allExpenses.push(expenseObj);
+            //total expense
+            totalExpense+= expense;
+            //output of total
+            output.textContent= "Total: "+totalExpense;
+
+            //table templating by storing the index value of allExpense
+            // const firstData= allExpenses[0];
+            // const secondData= allExpenses[1];
+            // console.log(secondData); 
+            // const table= "<div>"+"Description: "+firstData.desc+" "+"::"+" "+"Expense: "+firstData.amount+"</div>"+" "+"<div>"+"Description: "+secondData.desc+" "+"::"+" "+"Expense: "+secondData.amount+" "+"</div>";
+            
+            const expenseTableArr= allExpenses.map((expItem)=> {
+                const table= "<div>"+"Description: "+expItem.desc+" "+"::"+" "+"Expense: "+expItem.amount+"</div>";
+                return table;
+            }); //this function returns string as an array because of map function
+            const tableinHTML= expenseTableArr.join("");
+            expenseTable.innerHTML= tableinHTML;
+            //console.log(table);
+        }
+    </script>
+</body>
+</html>

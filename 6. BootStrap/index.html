@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expense App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="images\Logo.png" alt="Bootstrap" width="40" height="40"> ExpenseApp
+            </a>
+        </div>
+    </nav>
+    <div class="container-fluid bg-light text-light p-5">
+        <div class="container">
+            <div class="input-group mb-3">
+                <input 
+                type="text" 
+                class="form-control" 
+                id="input-desc" 
+                placeholder="Item Spent-On"
+                aria-label="Item Spent-On" 
+                aria-describedby="spent-on"
+                >
+            </div>
+
+            <div class="input-group mb-3">
+                <input 
+                type="number" 
+                class="form-control" 
+                id="input-val" 
+                placeholder="Item Cost" aria-label="Item Cost"
+                aria-describedby="cost-expense">
+                <span class="input-group-text" id="cost-expense">₹</span>
+                <button class="btn btn-outline-primary" type="button" id="btn-click">Add</button
+                >
+            </div>
+        </div>
+    </div>
+
+    <div class="p-3">
+        <div class="container">
+            <div id="total-out"></div>
+        </div>
+
+        <div class="p-5">
+            <div class="container">
+                <ul class="list-group" id="table-out"></ul>
+            </div>
+        </div>
+
+        <script>
+            //init the total expense
+            let totalExpense = 0;
+
+            //getting a ref. to the button
+            const btnRef = document.querySelector("#btn-click");
+
+            //getting a ref. to the input
+            const inputRef = document.querySelector("#input-val");
+
+            //getting a ref. to the items description where user done his/her expense
+            const textDesc = document.querySelector("#input-desc");
+
+            //getting a ref. to the output
+            var total = document.querySelector("#total-out");
+
+            //getting a ref. for templating the output
+            const expenseTable = document.querySelector("#table-out");
+
+            //creating an array to store the list of every item's expenses
+            let allExpenses = [];
+
+            //giving the ability to listen user events
+            btnRef.addEventListener("click", clickEventHandler);
+
+            //defininig the event handler
+            function clickEventHandler(){
+                //storing and reading the value of input
+                const inputValue = inputRef.value;
+
+                //storing and reading the text description of textDesc
+                const txtDesc = textDesc.value;
+
+                //convert the value to number
+                const expense = parseInt(inputValue);
+
+                //creating an object to store the information of items and its amount
+                const expenseObj = {};
+                expenseObj.desc = txtDesc;
+                expenseObj.amount = expense;
+                expenseObj.event= new Date();
+                //expenseObj.options={year: 'numeric', month: 'long', day: 'numeric'};
+
+                //pushing into the array of expense object on each click
+                allExpenses.push(expenseObj);
+                //total expense
+                totalExpense += expense;
+                total.innerHTML = getTotal(totalExpense);
+                renderArr(allExpenses);
+            }
+
+                //CONTROLLER FUNCTIONS................................
+
+                //View-Table function defined.....
+                //this function gives the output of total cost of all items
+                function getTotal(totalCost){
+                    return `<div class="card text-center">
+                    <div class="card-header">
+                        <h5 class="fw-bold">Total Cost</h5>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">${totalCost}</h5>
+                    </div>
+                  </div>
+                </div>`;
+                }
+
+                //this function creates the list item to DOM
+                function createListItem({desc,amount,event}){
+                    return `<li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">${desc}</div>
+                        <small class="text-muted">${getDate(event)}</small>
+                    </div>
+                    <div>
+                        <span class="px-3">${amount}</span>
+                        <button 
+                            type="button" 
+                            class="btn btn-outline-danger"
+                            onclick= "deleteItem(${event.valueOf()})"
+                            >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path
+                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z">
+                            </path>
+                        </svg>
+                        </button>
+                    </div>
+                </li>`;
+                }
+
+                //this function gives the output of the date
+                function getDate(event){ //passing the event object as an argument that is created earlier
+                    return event.toLocaleDateString('en-US',{year: 'numeric', month: 'long', day: 'numeric'});
+                }  
+            
+                //this function is used to delete that particular item from the list
+                function deleteItem(dateVal){
+                    const filtrArr= [];
+                    for(let i=0; i<allExpenses.length; i++){
+                        if(allExpenses[i].event.valueOf()===dateVal){
+                            //filtrArr.pop(allExpenses[i]); //pop method doesn't work because it's always removes the last element of the array returns that element if it's assigned
+                            filtrArr.splice(i, 1); //splice function removes or replace the elements of an array. splice(i,1) from start index i delete 1 element
+                            const cut= allExpenses[i].amount;
+                            totalExpense-= cut;
+                            total.innerHTML = getTotal(totalExpense);
+                        }else{
+                            filtrArr.push(allExpenses[i]); 
+                        }
+                    }
+                    allExpenses= filtrArr; //assigning the filtered array to allExpense array so it can be updated with the new values, so next time this function calls it can have that updated array in the allExpenses array
+                    renderArr(filtrArr);
+                }
+
+                //this function is used to render the table into the DOM
+                function renderArr(updtdArr){
+                    const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //to call the createListItem function on every element to allExpenses array I called the map function
+                    const tableinHTML = expenseTableArr.join("");
+                    expenseTable.innerHTML = tableinHTML;
+                }
+        </script>
+    </body>
+</html>
