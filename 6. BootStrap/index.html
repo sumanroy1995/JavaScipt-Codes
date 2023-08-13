@@ -75,7 +75,7 @@
             const expenseTable = document.querySelector("#table-out");
 
             //creating an array to store the list of every item's expenses
-            const allExpenses = [];
+            let allExpenses = [];
 
             //giving the ability to listen user events
             btnRef.addEventListener("click", clickEventHandler);
@@ -105,10 +105,7 @@
                 //output of total
                 //output.textContent = "Total: " + totalExpense;
                 output.innerHTML = getTotal(totalExpense);
-
-                const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //this function returns string as an array because of map function which is responsible to print it on DOM
-                const tableinHTML = expenseTableArr.join("");
-                expenseTable.innerHTML = tableinHTML;
+                renderArr(allExpenses);
             }
 
                 //CONTROLLER FUNCTIONS................................
@@ -158,13 +155,25 @@
                 }  
             
                 //this function is used to delete that particular item from the list
+                
                 function deleteItem(dateVal){
+                    const filtrArr= [];
                     for(let i=0; i<allExpenses.length; i++){
                         if(allExpenses[i].event.valueOf()===dateVal){
-                            console.log("Delete button clicked");
+                            //filtrArr.pop(allExpenses[i]); //pop method doesn't work because it's always removes the last element of the array returns that element if it's assigned
+                            filtrArr.splice(i, 1); //splice function removes or replace the elements of an array. splice(i,1) from start index i delete 1 element
+                        }else{
+                            filtrArr.push(allExpenses[i]); 
                         }
                     }
-                    
+                    allExpenses= filtrArr; //assigning the filtered array to allExpense array so it can be updated with the new values, so next time this function calls it can have that updated array in the allExpenses array
+                    console.log(allExpenses);
+                    renderArr(filtrArr);
+                }
+                function renderArr(updtdArr){
+                    const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //to call the createListItem function on every element to allExpenses array I called the map function
+                    const tableinHTML = expenseTableArr.join("");
+                    expenseTable.innerHTML = tableinHTML;
                 }
         </script>
     </body>
