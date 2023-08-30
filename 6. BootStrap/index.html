@@ -170,7 +170,7 @@
                 function getDate(event){ //passing the event object as an argument that is created earlier
                     return event.toLocaleDateString('en-US',{year: 'numeric', month: 'long', day: 'numeric'});
                 }  
-            
+
                 //this function is used to delete that particular item from the list
                 function deleteItem(dateVal){
                     const filtrArr= [];
@@ -188,7 +188,7 @@
                     allExpenses= filtrArr; //assigning the filtered array to allExpense array so it can be updated with the new values, so next time this function calls it can have that updated array in the allExpenses array
                     renderArr(filtrArr);
                 }
-
+                //this function edits the index value and print that updated value to the table
                 function editItem(dateVal){
                     const editArr=[];
                     for(let i=0; i<allExpenses.length; i++){
@@ -196,11 +196,10 @@
                         const reduc= totalExpense-allExpenses[i].amount;
                         allExpenses[i].desc= prompt("Enter the item name");
                         allExpenses[i].amount= prompt("Enter the item price");
-                        allExpenses[i].event.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
                         const convrt= parseInt(allExpenses[i].amount);
                         const current= reduc+convrt; 
-                        console.log(current);
-                        total.innerHTML= getTotal(current);
+                        totalExpense= current;
+                        total.innerHTML= getTotal(totalExpense);
                         editArr.push(allExpenses[i]);
                     }else{
                         editArr.push(allExpenses[i]);
@@ -209,12 +208,13 @@
                  allExpenses= editArr;
                  renderArr(editArr);
             }
-                //this function is used to render the table into the DOM
-                function renderArr(updtdArr){
-                    const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //to call the createListItem function on every element to allExpenses array, we called the map function
-                    const tableinHTML = expenseTableArr.join("");
-                    expenseTable.innerHTML = tableinHTML;
-                }
+
+            //this function is used to render the table into the DOM
+            function renderArr(updtdArr){
+                const expenseTableArr = allExpenses.map(expItem => createListItem(expItem)); //to call the createListItem function on every element to allExpenses array, we called the map function
+                const tableinHTML = expenseTableArr.join("");
+                expenseTable.innerHTML = tableinHTML;
+            }
         </script>
     </body>
 </html>
